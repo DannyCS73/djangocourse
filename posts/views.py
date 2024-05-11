@@ -1,5 +1,6 @@
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics, mixins
 from rest_framework.decorators import api_view, APIView
 from .models import Post
@@ -20,19 +21,20 @@ def homepage(request:Request):
     response = {"message": "Hello World!"}
     return Response(data=response, status=status.HTTP_200_OK)
 
-class PostViewset(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-
-# class PostListCreateView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
-#     serializer_class = PostSerializer
+# class PostViewset(viewsets.ModelViewSet):
 #     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
 
-#     def get(self, request:Request, *args, **kwargs):
-#         return self.list(request, *args, **kwargs)
+class PostListCreateView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Post.objects.all()
+
+    def get(self, request:Request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
     
-#     def post(self, request:Request, *args, **kwargs):
-#         return self.create(request, *args, **kwargs)
+    def post(self, request:Request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 # class PostRetrieveUpdateDeleteView(generics.GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):

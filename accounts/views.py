@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
+from rest_framework.permissions import AllowAny
+
 
 # Create your views here.
 
@@ -26,6 +28,8 @@ class SignUpView(generics.GenericAPIView):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request:Request):
         email = request.data.get('email')
         password = request.data.get('password')
