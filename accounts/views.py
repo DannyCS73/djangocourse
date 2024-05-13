@@ -12,6 +12,8 @@ from .tokens import create_jwt_pair_for_user
 # Create your views here.
 
 class SignUpView(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+
     serializer_class = SignUpSerializer
 
     def post(self, request:Request):

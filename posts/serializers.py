@@ -6,4 +6,9 @@ class PostSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=50)
     class Meta:
         model = Post
-        fields=['id','title','content','created']
+        fields=['id','title','content','created', 'author']
+
+class PostCurrentUserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Post
+            fields=['id','title','content','created']

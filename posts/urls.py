@@ -8,7 +8,10 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
     path("homepage/", views.homepage, name="posts_home"),
     path("", views.PostListCreateView.as_view(), name="posts_listcreate"),
-    path("<int:pk>", views.PostRetrieveUpdateDeleteView.as_view(), name="posts_by_id")
+    path("<int:pk>", views.PostRetrieveUpdateDeleteView.as_view(), name="post_details"),
+    path("current_user/", views.get_posts_for_current_user, name="current_user"),
+    path("posts_for/", views.ListPostsForAuthor.as_view(), name="posts_for_current_user")
+
 
 ]
 
